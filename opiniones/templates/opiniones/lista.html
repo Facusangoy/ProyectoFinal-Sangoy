@@ -1,0 +1,23 @@
+{% extends 'bar/base.html' %}
+{% block title %}Opiniones{% endblock %}
+{% block content %}
+  <h1>Opiniones</h1>
+
+  {% if user.is_authenticated %}
+    <a href="{% url 'crear_opinion' %}">Agregar opinión</a>
+  {% endif %}
+
+  {% if opiniones %}
+    <ul>
+      {% for opinion in opiniones %}
+        <li>
+          <h3>{{ opinion.titulo }}</h3>
+          <p>{{ opinion.fecha|date:"d M Y" }}</p>
+          <a href="{% url 'detalle_opinion' opinion.pk %}">Leer más</a>
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>No hay opiniones aún.</p>
+  {% endif %}
+{% endblock %}

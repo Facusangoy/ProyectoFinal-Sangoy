@@ -1,0 +1,9 @@
+{% extends 'bar/base.html' %}
+{% block content %}
+  <h2>¿Estás seguro que querés borrar esta opinión?</h2>
+  <form method="post">
+    {% csrf_token %}
+    <button type="submit">Sí, borrar</button>
+    <a href="{% url 'opiniones' %}">Cancelar</a>
+  </form>
+{% endblock %}

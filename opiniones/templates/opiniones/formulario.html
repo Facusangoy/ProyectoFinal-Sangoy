@@ -1,0 +1,13 @@
+{% extends 'bar/base.html' %}
+{% block content %}
+  <h2>{{ object.titulo }}</h2>
+  <p>{{ object.contenido|safe }}</p>
+  {% if object.imagen %}
+    <img src="{{ object.imagen.url }}" width="300">
+  {% endif %}
+
+  {% if user == object.autor %}
+    <a href="{% url 'editar_opinion' object.pk %}">Editar</a>
+    <a href="{% url 'borrar_opinion' object.pk %}">Borrar</a>
+  {% endif %}
+{% endblock %}
