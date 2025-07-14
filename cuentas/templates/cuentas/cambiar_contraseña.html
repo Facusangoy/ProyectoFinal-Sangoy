@@ -1,10 +1,32 @@
 {% extends 'bar/base.html' %}
-{% block title %}Cambiar contraseña{% endblock %}
+
 {% block content %}
-  <h2>Cambiar contraseña</h2>
-  <form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Cambiar contraseña</button>
-  </form>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+
+            <h2 class="mb-4 text-center">Recuperar Contraseña</h2>
+
+            <form method="post" novalidate>
+                {% csrf_token %}
+                {% for field in form %}
+                    <div class="mb-3">
+                        <label class="form-label">{{ field.label }}</label>
+                        {{ field }}
+                        {% if field.errors %}
+                            <div class="text-danger">{{ field.errors|striptags }}</div>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+                {% if form.non_field_errors %}
+                    <div class="alert alert-danger">
+                        {{ form.non_field_errors }}
+                    </div>
+                {% endif %}
+                <button type="submit" class="btn btn-primary w-100">Cambiar contraseña</button>
+            </form>
+
+        </div>
+    </div>
+</div>
 {% endblock %}

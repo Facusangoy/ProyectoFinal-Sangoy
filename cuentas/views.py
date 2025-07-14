@@ -1,41 +1,72 @@
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth import update_session_auth_hash
-from django.contrib.auth.forms import PasswordChangeForm
 from django.shortcuts import render, redirect
-from .models import Perfil
-from .forms import ProfileUpdateForm
+from django.contrib.auth.decorators import login_required
+from django.urls import reverse_lazy
+from django.contrib import messages
+from django.contrib.auth.models import User
+from .forms import (
+    RegistroUsuarioForm,
+    PasswordChangeByUserInfoForm,
+    AvatarForm
+)
+from .models import Profile
 
+def registro(request):
+    if request.method == 'POST':
+        form = RegistroUsuarioForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect(reverse_lazy('login'))
+    else:
+        form = RegistroUsuarioForm()
+    return render(request, 'cuentas/crear_cuenta.html', {'form': form})
+
+
+# Vista del perfil
 @login_required
 def perfil_view(request):
-    perfil_usuario = request.user.perfil
-    return render(request, 'cuentas/perfil.html', {'perfil': perfil_usuario, 'user': request.user})
-
-def crear_cuenta(request):
-    return render(request, 'cuentas/crear_cuenta.html')
-
-@login_required
-def editarPerfil(request):
-    perfil_usuario = request.user.perfil
-    if request.method == 'POST':
-        form = ProfileUpdateForm(request.POST, request.FILES, instance=perfil_usuario)
-        if form.is_valid():     
-            form.save()
-            return redirect('perfil')
-    else:
-        form = ProfileUpdateForm(instance=perfil_usuario)
-
-    return render(request, 'cuentas/editarPerfil.html', {'form': form})
+    perfil = request.user.profile
+    return render(request, 'cuentas/perfil.html', {
+        'user': request.user,
+        'perfil': perfil
+    })
 
 
 @login_required
-def cambiar_contraseña(request):
-    if request.method == 'POST':
-        form = PasswordChangeForm(user=request.user, data=request.POST)
+def ver_perfil(request):
+    perfil = Profile.objects.get(user=request.user)
+    return render(request, 'cuentas/perfil.html', {'perfil': perfil})
+
+def cambiar_password_por_info_usuario(request):
+    if request.method == "POST":
+        form = PasswordChangeByUserInfoForm(request.POST)
         if form.is_valid():
-            user = form.save()
-            update_session_auth_hash(request, user)
-            return redirect('perfil')
+            username = form.cleaned_data['username']
+            new_password = form.cleaned_data['new_password1']
+            user = User.objects.get(username=username)
+            user.set_password(new_password)
+            user.save()
+            messages.success(request, "Contraseña cambiada correctamente.")
+            return redirect('login')
     else:
-        form = PasswordChangeForm(user=request.user)
+        form = PasswordChangeByUserInfoForm()
 
     return render(request, 'cuentas/cambiar_contraseña.html', {'form': form})
+
+@login_required
+def subir_avatar(request):
+    perfil = request.user.profile
+
+    if perfil.avatar:
+        messages.info(request, "Ya tenés un avatar.")
+        return redirect('ver_perfil')  
+
+    if request.method == 'POST':
+        form = AvatarForm(request.POST, request.FILES, instance=perfil)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Avatar subido correctamente.")
+            return redirect('ver_perfil') 
+    else:
+        form = AvatarForm()
+
+    return render(request, 'cuentas/subir_avatar.html', {'form': form})

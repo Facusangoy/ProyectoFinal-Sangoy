@@ -1,12 +1,12 @@
 from django.urls import path
-from django.contrib.auth.views import LoginView, LogoutView
+from django.contrib.auth import views as auth_views
 from . import views
+from .views import cambiar_password_por_info_usuario
 
 urlpatterns = [
-    path('login/', LoginView.as_view(template_name='cuentas/login.html'), name='login'),
-    path('logout/', LogoutView.as_view(), name='logout'),
-    path('crear/', views.crear_cuenta, name='crear_cuenta'),
-    path('perfil/', views.Perfil, name='perfil'),
-    path('perfil/editar/', views.editarPerfil, name='editar_perfil'),
-    path('perfil/contraseña/', views.cambiar_contraseña, name='cambiar_contraseña'),
+    path('login/', auth_views.LoginView.as_view(template_name='cuentas/login.html'), name='login'),
+    path('logout/', auth_views.LogoutView.as_view(next_page='inicio'), name='logout'),
+    path('signup/', views.registro, name='signup'),
+    path('perfil/', views.perfil_view, name='perfil'),
+    path('cambiar_contraseña/', cambiar_password_por_info_usuario, name='cambiar_contraseña'),
 ]

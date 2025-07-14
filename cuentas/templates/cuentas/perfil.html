@@ -1,15 +1,23 @@
 {% extends 'bar/base.html' %}
-{% block title %}Mi perfil{% endblock %}
+{% load static %}
+
+{% block title %}Perfil - {{ user.username }}{% endblock %}
+
 {% block content %}
-  <h2>Mi perfil</h2>
-  <p>Usuario: {{ user.username }}</p>
-  <p>Email: {{ user.email }}</p>
-  <p>Bio: {{ perfil.bio }}</p>
-  <p>Nacimiento: {{ perfil.nacimiento }}</p>
-  {% if perfil.avatar %}
-    <img src="{{ perfil.avatar.url }}" alt="Avatar" width="150">
-  {% endif %}
-  <br><br>
-  <a href="{% url 'editar_perfil' %}">Editar perfil</a> |
-  <a href="{% url 'cambiar_contraseña' %}">Cambiar contraseña</a>
+<div class="container">
+    <div class="d-flex align-items-center mb-3">
+            {% if perfil.avatar %}
+                <img src="{{ perfil.avatar.url }}" alt="Avatar de {{ user.username }}" class="rounded-circle me-3" width="60" height="60">
+            {% else %}
+                <img src="{% static 'img/default-avatar.png' %}" alt="Avatar por defecto" class="rounded-circle me-3" width="60" height="60">
+            {% endif %}
+        <h1 class="mb-0">Perfil de {{ user.username }}</h1>
+    </div>
+        <p>Nombre: {{ user.first_name }}</p>
+        <p>Apellido: {{ user.last_name }}</p>
+        <p>DNI: {{ perfil.dni }}</p>
+        <p>Email: {{ user.email }}</p>
+        <p>Cel: {{ perfil.telefono }}</p>
+</div>
 {% endblock %}
+

@@ -1,0 +1,14 @@
+{% extends 'bar/base.html' %}
+
+{% block title %}Comentarios{% endblock %}
+
+{% block content %}
+    <h1>Comentarios</h1>
+    {% for c in comentarios %}
+        <p>
+            <strong>
+            {{ c.usuario.username }}
+            </strong>: {{ c.contenido }}
+        </p>
+    {% endfor %}
+{% endblock content %}
