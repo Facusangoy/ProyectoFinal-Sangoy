@@ -5,7 +5,7 @@
 
 ## Nombre del Proyecto
 
-#### Tregua Bar
+### Tregua Bar
 
 ## Descripción del Proyecto
 
