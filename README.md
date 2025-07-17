@@ -34,6 +34,9 @@
 ##### Python
 ##### Django 
 
+## Para hacer que funcione tiene que abrir el terminal en Visual Studio Code, hacer un makemigrations, hacer un migrate y crear un superuser.
+### En mi caso el superuser es TREGUA y la contraseña 1234
+
 ## Video de como funciona la página
 
 #### https://youtu.be/931CxB60lYA
