@@ -1,0 +1,17 @@
+{% extends 'bar/base.html' %}
+{% block title %}Responder Comentario{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Responder comentario de {{ comentario.usuario.username }}</h2>
+    <p><strong>Comentario:</strong> {{ comentario.contenido }}</p>
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        <button type="submit" class="btn btn-primary">Guardar respuesta</button>
+        <a href="{% url 'comentarios' %}" class="btn btn-secondary">Cancelar</a>
+    </form>
+</div>
+{% endblock %}

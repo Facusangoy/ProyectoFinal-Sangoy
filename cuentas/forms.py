@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from .models import Profile
-
+from .models import AvatarDefault
 
 class RegistroUsuarioForm(UserCreationForm):
     first_name = forms.CharField(label="Nombre")
@@ -36,6 +36,12 @@ class RegistroUsuarioForm(UserCreationForm):
             profile.save()
 
         return user
+    
+def clean_username(self):
+    username = self.cleaned_data.get('username')
+    if User.objects.filter(username=username).exists():
+        raise forms.ValidationError("Este nombre de usuario ya está en uso.")
+    return username
 
 class PasswordChangeByUserInfoForm(forms.Form):
     username = forms.CharField(max_length=150, label="Nombre de usuario")
@@ -74,3 +80,8 @@ class AvatarForm(forms.ModelForm):
         model = Profile
         fields = ['avatar']
         labels = {'avatar': 'Seleccioná tu imagen'}
+
+class AvatarDefaultForm(forms.ModelForm):
+    class Meta:
+        model = AvatarDefault
+        fields = ['imagen']

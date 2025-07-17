@@ -2,7 +2,47 @@
 
 {% block title %}Ubicación{% endblock %}
 
+{% block extra_head %}
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<style>
+    #map {
+        height: 400px;
+        border-radius: 10px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+</style>
+{% endblock %}
+
 {% block content %}
-<h1>Ubicación del Bar</h1>
-<p>Estamos en Avenida Siempreviva 742, Springfield.</p>
+<div class="container mt-4">
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h1 class="card-title">Ubicación de Tregua</h1>
+                <p class="card-text">Estamos en Córdoba Capital en 25 de mayo al 703</p>
+                <div id="map" class="mt-3"></div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+  var lat = -31.41660;  
+  var lon = -64.17271;
+
+  var map = L.map('map').setView([lat, lon], 16);
+
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19,
+      attribution: '&copy; OpenStreetMap contributors'
+  }).addTo(map);
+
+  L.marker([lat, lon]).addTo(map)
+    .bindPopup('Tregua')
+    .openPopup();
+</script>
 {% endblock %}

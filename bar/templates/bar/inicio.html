@@ -2,7 +2,59 @@
 
 {% block title %}Inicio{% endblock %}
 
+{% block extra_head %}
+<style>
+.hero {
+    background-image: url("https://cloudfront-us-east-1.images.arcpublishing.com/grupoclarin/JPPGJFNPYRGVLMBN7XL3CH6ITI.jpeg");
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    padding: 70px;
+    box-sizing: border-box;
+
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    text-shadow: 4px 2px 5px rgba(0, 0, 0, 0.8);
+    margin-bottom: 0;
+}
+
+.hero h1 {
+    font-size: 4rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.hero p {
+    font-size: 1.5rem;
+    font-weight: 400;
+    margin-bottom: 2rem;
+}
+
+.hero .btn {
+    font-size: 1.1rem;
+    padding: 10px 25px;
+    background-color: #887400ff;
+    color: #ffffffff;
+    border: none;
+    transition: 0.3s ease;
+}
+
+.hero .btn:hover {
+    background-color: #ac9200ff;
+    color: #383838ff;
+}
+</style>
+{% endblock %}
+
 {% block content %}
-<h1>Bienvenido a TREGUA RESTAURANT</h1>
-<p>Tu bar de confianza 🍻</p>
+<div class="container-fluid p-0">
+    <div class="hero">
+        <h1>Bienvenido a <strong>TREGUA</strong></h1>
+        <a href="{% url 'reserva' %}" class="btn">Reservar ahora</a>
+    </div>
+</div>
 {% endblock %}

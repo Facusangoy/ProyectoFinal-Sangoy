@@ -1,0 +1,110 @@
+{% extends 'bar/base.html' %}
+{% load static %}
+
+{% block title %}Acerca de mí{% endblock %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
+<style>
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+main {
+    flex: 1;
+}
+
+.about-wrapper {
+    max-width: 1000px;
+    margin: 40px auto;
+    display: flex;
+    gap: 50px;
+    font-family: 'Segoe UI', sans-serif;
+    color: #2c2c2c;
+    padding: 20px;
+}
+
+.about-left {
+    background-color: #1f1f3d;
+    padding: 25px;
+    width: 300px;
+    border-radius: 12px;
+    color: #ffffff;
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.about-left img {
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 15px;
+    border: 4px solid #fff;
+}
+
+.about-left h2 {
+    margin: 10px 0 5px;
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+
+.about-left p {
+    margin: 5px 0;
+    font-weight: 400;
+}
+
+.social-links {
+    margin-top: 18px;
+}
+
+.social-links a {
+    margin: 0 10px;
+    color: #ffffff;
+    font-size: 1.5rem;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.social-links a:hover {
+    color: #ffcc00;
+}
+
+.about-right {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    font-size: 1.1rem;
+    line-height: 1.7;
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<main>
+    <div class="about-wrapper">
+        <div class="about-left">
+                {% if aboutme and aboutme.photo %}
+                    <img src="{{ aboutme.photo.url }}" alt="Foto de {{ user.get_full_name|default:'Facu' }}">
+                {% else %}
+                    <img src="{% static 'bar/images/about_photo' %}" alt="Foto por defecto">
+                {% endif %}
+            <h2>Facundo Sangoy</h2>
+            <p>Python Developer Jr.</p>
+            <div class="social-links">
+                <a href="https://github.com/Facusangoy" target="_blank"><i class="bi bi-github"></i></a>
+                <a href="https://www.instagram.com/facu_sangoy/" target="_blank"><i class="bi bi-instagram"></i></a>
+            </div>
+        </div>
+        <div class="about-right">
+            <p>
+                ¡Hola! Soy Facundo, Tengo 17 años, soy un estudiante del colegio Ipet Nª66 Dr. José Antonio Blaseiro. 
+                Es un colegio tecnico y me gusta todo lo relacionado con la tecnología, y actualmente estoy aprendiendo Python y Django. Luego de terminar Python me gustaria empezar a perfeccionarme en HTML y CSS.
+                ¡Gracias por visitar mi página! Si te gusta lo que hago, podés seguirme en mis redes sociales.    
+            </p>
+        </div>
+    </div>
+</main>
+{% endblock %}

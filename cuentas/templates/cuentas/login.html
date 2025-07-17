@@ -1,10 +1,25 @@
 {% extends 'bar/base.html' %}
 {% block content %}
 <h2>Iniciar sesión</h2>
+
+    <style>
+    .btn-outline-gold {
+        border-color: #6c757d;
+        color: #383838ff;
+        transition: all 0.6s ease;
+    }
+
+    .btn-outline-gold:hover {
+        background-color: #887400ff; 
+        border-color: #887400ff;
+        color: white;
+    }
+    </style>
+
 <form method="post">
     {% csrf_token %}
     {{ form.as_p }}
-    <button type="submit">Entrar</button>
+    <button type="submit" class="btn btn-outline-gold">Entrar</button>
 </form>
 <a href="{% url 'cambiar_contraseña' %}">¿Olvidaste tu contraseña? Cambiala aquí</a>
 {% endblock %}

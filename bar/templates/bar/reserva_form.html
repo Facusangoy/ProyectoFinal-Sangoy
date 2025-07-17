@@ -1,12 +1,67 @@
 {% extends 'bar/base.html' %}
+{% load static %}
 
 {% block title %}Reservar Mesa{% endblock %}
 
 {% block content %}
-<h1>Reservar Mesa</h1>
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Reservar</button>
-</form>
+<div class="container mt-4">
+    <h2 class="mb-4">Reservar Mesa</h2>
+
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-success" role="alert">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <form method="post" class="card p-4 shadow-sm">
+        {% csrf_token %}
+        <div class="mb-3">
+            {{ form.nombre.label_tag }}
+            {{ form.nombre }}
+        </div>
+        <div class="mb-3">
+            {{ form.email.label_tag }}
+            {{ form.email }}
+        </div>
+        <div class="mb-3">
+            {{ form.fecha.label_tag }}
+            {{ form.fecha }}
+        </div>
+        <div class="mb-3">
+            {{ form.hora.label_tag }}
+            {{ form.hora }}
+        </div>
+        <div class="mb-3">
+            {{ form.telefono.label_tag }}
+            {{ form.telefono }}
+        </div>
+        <div class="mb-3">
+            {{ form.cantidad_personas.label_tag }}
+            {{ form.cantidad_personas }}
+        </div>
+        <button type="submit" class="btn btn-success">Reservar</button>
+    </form>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+<script>
+    flatpickr("#id_fecha", {
+        dateFormat: "Y-m-d",
+        minDate: "today",
+        locale: "es"
+    });
+
+    flatpickr("#id_hora", {
+        enableTime: true,
+        noCalendar: true,
+        dateFormat: "H:i",
+        time_24hr: true
+    });
+</script>
 {% endblock %}

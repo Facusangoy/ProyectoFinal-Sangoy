@@ -1,0 +1,74 @@
+{% extends 'bar/base.html' %}
+{% block title %}Vinos y Cócteles{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2 class="mb-4 text-center">🍷 Vinos y Cócteles</h2>
+    
+    <style>
+    .btn-outline-gold {
+        border-color: #6c757d;
+        color: #383838ff;
+        transition: all 0.6s ease;
+    }
+
+    .btn-outline-gold:hover {
+        background-color: #887400ff; 
+        border-color: #887400ff;
+        color: white;
+    }
+    </style>
+
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <ul class="list-group shadow">
+
+                <li class="list-group-item d-flex justify-content-between">
+                    <span>Copa de vino tinto Malbec</span>
+                    <span>$2.500</span>
+                </li>
+
+                <li class="list-group-item d-flex justify-content-between">
+                    <span>Copa de vino blanco Torrontés</span>
+                    <span>$2.300</span>
+                </li>
+
+                <li class="list-group-item d-flex justify-content-between">
+                    <span>Fernet con Coca (vaso)</span>
+                    <span>$2.800</span>
+                </li>
+
+                <li class="list-group-item d-flex justify-content-between">
+                    <span>Cóctel Aperol Spritz</span>
+                    <span>$3.200</span>
+                </li>
+
+                <li class="list-group-item d-flex justify-content-between">
+                    <span>Mojito clásico</span>
+                    <span>$3.400</span>
+                </li>
+
+                <li class="list-group-item d-flex justify-content-between">
+                    <span>Gin Tonic (clásico)</span>
+                    <span>$3.500</span>
+                </li>
+
+                <li class="list-group-item d-flex justify-content-between">
+                    <span>Caipirinha</span>
+                    <span>$3.100</span>
+                </li>
+
+                <li class="list-group-item d-flex justify-content-between">
+                    <span>Cerveza tirada (pinta)</span>
+                    <span>$2.600</span>
+                </li>
+
+            </ul>
+
+            <div class="text-center mt-4">
+                <a href="{% url 'carta' %}" class="btn btn-outline-gold">← Volver a la carta</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

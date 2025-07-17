@@ -6,13 +6,14 @@ from django.contrib.auth.models import User
 from .forms import (
     RegistroUsuarioForm,
     PasswordChangeByUserInfoForm,
-    AvatarForm
 )
+from .models import AvatarDefault
+from .forms import AvatarDefaultForm
 from .models import Profile
 
 def registro(request):
     if request.method == 'POST':
-        form = RegistroUsuarioForm(request.POST)
+        form = RegistroUsuarioForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
             return redirect(reverse_lazy('login'))
@@ -20,16 +21,13 @@ def registro(request):
         form = RegistroUsuarioForm()
     return render(request, 'cuentas/crear_cuenta.html', {'form': form})
 
-
-# Vista del perfil
 @login_required
-def perfil_view(request):
+def perfil(request):
     perfil = request.user.profile
     return render(request, 'cuentas/perfil.html', {
         'user': request.user,
         'perfil': perfil
     })
-
 
 @login_required
 def ver_perfil(request):
@@ -52,21 +50,15 @@ def cambiar_password_por_info_usuario(request):
 
     return render(request, 'cuentas/cambiar_contraseña.html', {'form': form})
 
-@login_required
-def subir_avatar(request):
-    perfil = request.user.profile
-
-    if perfil.avatar:
-        messages.info(request, "Ya tenés un avatar.")
-        return redirect('ver_perfil')  
+def subir_avatar_default(request):
+    avatar_default, created = AvatarDefault.objects.get_or_create(id=1)
 
     if request.method == 'POST':
-        form = AvatarForm(request.POST, request.FILES, instance=perfil)
+        form = AvatarDefaultForm(request.POST, request.FILES, instance=avatar_default)
         if form.is_valid():
             form.save()
-            messages.success(request, "Avatar subido correctamente.")
-            return redirect('ver_perfil') 
+            return redirect('inicio') 
     else:
-        form = AvatarForm()
+        form = AvatarDefaultForm(instance=avatar_default)
 
-    return render(request, 'cuentas/subir_avatar.html', {'form': form})
+    return render(request, 'cuentas/subir_avatar_default.html', {'form': form})

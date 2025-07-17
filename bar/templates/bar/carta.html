@@ -1,8 +1,33 @@
 {% extends 'bar/base.html' %}
-
 {% block title %}Carta{% endblock %}
 
 {% block content %}
-<h2>Nuestra Carta</h2>
-<p>Acá va el contenido de la carta.</p>
+<div class="container mt-4">
+    <h2 class="mb-4 text-center">Nuestra Carta</h2>
+
+    <style>
+    .btn-outline-gold {
+        border-color: #6c757d;
+        color: #383838ff;
+        transition: all 0.6s ease;
+    }
+
+    .btn-outline-gold:hover {
+        background-color: #887400ff; 
+        border-color: #887400ff;
+        color: white;
+    }
+    </style>
+
+        <div class="d-flex flex-wrap justify-content-center gap-2 mb-4">
+            <a href="{% url 'desayunos_y_meriendas' %}" class="btn btn-outline-gold ">🥐☕ Desayunos y Meriendas</a>
+            <a href="{% url 'almuerzo_y_cena' %}" class="btn btn-outline-gold">🍽️ Almuerzo y Cena</a>
+            <a href="{% url 'bebidas' %}" class="btn btn-outline-gold">🥤 Bebidas</a>
+            <a href="{% url 'vinos_y_cocteles' %}" class="btn btn-outline-gold">🍷 Vinos y Cócteles</a>
+        </div>
+
+    <div class="text-center">
+        <p>Seleccioná una categoría para ver los productos disponibles.</p>
+    </div>
+</div>
 {% endblock %}

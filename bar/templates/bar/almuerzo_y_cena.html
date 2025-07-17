@@ -1,0 +1,74 @@
+{% extends 'bar/base.html' %}
+{% block title %}Almuerzo y Cena{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2 class="mb-4 text-center">🍽️ Almuerzo y Cena</h2>
+    
+    <style>
+    .btn-outline-gold {
+        border-color: #6c757d;
+        color: #383838ff;
+        transition: all 0.6s ease;
+    }
+
+    .btn-outline-gold:hover {
+        background-color: #887400ff; 
+        border-color: #887400ff;
+        color: white;
+    }
+    </style>
+
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <ul class="list-group shadow">
+
+                <li class="list-group-item d-flex justify-content-between">
+                    <span>Milanesa napolitana con papas fritas</span>
+                    <span>$4.800</span>
+                </li>
+
+                <li class="list-group-item d-flex justify-content-between">
+                    <span>Ravioles con salsa bolognesa</span>
+                    <span>$4.500</span>
+                </li>
+
+                <li class="list-group-item d-flex justify-content-between">
+                    <span>Hamburguesa completa con papas</span>
+                    <span>$4.200</span>
+                </li>
+
+                <li class="list-group-item d-flex justify-content-between">
+                    <span>Ensalada César con pollo grillado</span>
+                    <span>$4.000</span>
+                </li>
+
+                <li class="list-group-item d-flex justify-content-between">
+                    <span>Pollo al horno con papas</span>
+                    <span>$4.300</span>
+                </li>
+
+                <li class="list-group-item d-flex justify-content-between">
+                    <span>Empanadas (x3)</span>
+                    <span>$1.800</span>
+                </li>
+
+                <li class="list-group-item d-flex justify-content-between">
+                    <span>Pizza muzzarella</span>
+                    <span>$3.500</span>
+                </li>
+
+                <li class="list-group-item d-flex justify-content-between">
+                    <span>Milanesa vegetariana con ensalada</span>
+                    <span>$4.100</span>
+                </li>
+
+            </ul>
+
+            <div class="text-center mt-4">
+                <a href="{% url 'carta' %}" class="btn btn-outline-gold">← Volver a la carta</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

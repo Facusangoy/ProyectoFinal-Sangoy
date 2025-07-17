@@ -1,14 +1,45 @@
 {% extends 'bar/base.html' %}
-
+{% load static %}
 {% block title %}Comentarios{% endblock %}
 
 {% block content %}
-    <h1>Comentarios</h1>
-    {% for c in comentarios %}
-        <p>
-            <strong>
-            {{ c.usuario.username }}
-            </strong>: {{ c.contenido }}
-        </p>
+<div class="container mt-4">
+    <h2>Comentarios</h2>
+
+    <a href="{% url 'crear_comentario' %}" class="btn btn-success mb-3">Agregar Comentario</a>
+
+    {% for comentario in comentarios %}
+        <div class="card mb-3">
+            <div class="card-body">
+                <h5 class="card-title">{{ comentario.usuario.username }}</h5>
+                <p class="card-text">{{ comentario.contenido }}</p>
+                <p class="card-text"><small class="text-muted">{{ comentario.creado }}</small></p>
+
+                {% if comentario.respuesta_admin %}
+                    <div class="alert alert-warning mt-2">
+                        <strong>Respuesta del administrador:</strong><br>
+                        {{ comentario.respuesta_admin }}
+                    </div>
+                {% endif %}
+
+                <div class="mt-2">
+                    {% if user.is_authenticated %}
+                        {% if user == comentario.usuario or user.is_superuser %}
+                            <a href="{% url 'editar_comentario' comentario.id %}" class="btn btn-sm btn-warning">Editar</a>
+                            <form action="{% url 'eliminar_comentario' comentario.id %}" method="post" style="display:inline;">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('¿Seguro querés borrar este comentario?');">Borrar</button>
+                            </form>
+                        {% endif %}
+                        {% if user.is_superuser %}
+                            <a href="{% url 'responder_comentario' comentario.id %}" class="btn btn-sm btn-info">Responder</a>
+                        {% endif %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    {% empty %}
+        <p>No hay comentarios aún.</p>
     {% endfor %}
-{% endblock content %}
+</div>
+{% endblock %}

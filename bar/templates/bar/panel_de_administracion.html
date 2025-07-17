@@ -1,0 +1,93 @@
+{% extends 'bar/base.html' %}
+{% block title %}Panel de Administración{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1>Panel de Administración</h1>
+
+    <form method="get" class="mb-3 row g-2 align-items-center">
+        <div class="col-auto">
+            <input type="text" name="usuario" placeholder="Buscar por nombre" value="{{ usuario_busqueda }}" class="form-control" />
+        </div>
+        <div class="col-auto">
+            <button type="submit" class="btn btn-primary">Buscar</button>
+            <a href="{% url 'panel_de_administracion' %}" class="btn btn-secondary">Limpiar</a>
+        </div>
+    </form>
+
+    <h2>Reservas</h2>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Fecha</th>
+                <th>Hora</th>
+                <th>Usuario</th>
+                <th>Nombre reserva</th>
+                <th>Teléfono</th>
+                <th>Cantidad de Personas</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for reserva in reservas %}
+            <tr>
+                <td>{{ reserva.fecha }}</td>
+                <td>{{ reserva.hora }}</td>
+                <td>{{ reserva.user.username }}</td>
+                <td>{{ reserva.nombre }}</td>
+                <td>{{ reserva.telefono }}</td>
+                <td>{{ reserva.cantidad_personas }}</td>
+                <td>
+                    <form action="{% url 'eliminar_reserva' reserva.id %}" method="post" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('¿Eliminar esta reserva?');">Eliminar</button>
+                    </form>
+                </td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="6">No hay reservas.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <h2 class="mt-5">Menú de Usuarios</h2>
+    <form method="get" class="mb-3 row g-2 align-items-center">
+        <div class="col-auto">
+            <input type="text" name="buscar_usuario" placeholder="Buscar usuario por nombre" value="{{ buscar_usuario }}" class="form-control" />
+        </div>
+        <div class="col-auto">
+            <button type="submit" class="btn btn-info">Buscar</button>
+        </div>
+    </form>
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Nombre de usuario</th>
+                <th>Email</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in usuarios %}
+            <tr>
+                <td>{{ user.username }}</td>
+                <td>{{ user.email }}</td>
+                <td>
+                    <a href="{% url 'editar_perfil_admin' user.id %}" class="btn btn-sm btn-warning">Editar Perfil</a>
+                    {% if user.username != "TREGUA" %}
+                    <form action="{% url 'eliminar_usuario' user.id %}" method="post" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('¿Eliminar este usuario?');">Eliminar</button>
+                    </form>
+                    {% endif %}
+                </td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="4">No se encontraron usuarios.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</div>
+{% endblock %}

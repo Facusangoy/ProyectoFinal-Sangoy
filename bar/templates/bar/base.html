@@ -5,39 +5,78 @@
     <meta charset="UTF-8">
     <title>{% block title %}TREGUA{% endblock %}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+        <link rel="stylesheet" href=".">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    {% block extra_head %}
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-sA+4pff+PKjaNgc7PNRZ7WLYX0w79Yf2MJ/j2Jk0Cs4=" crossorigin=""/>
+    {% endblock %}
+    
+    <link rel="shortcut icon" href="/media/faviconn.ico" type="image/x-icon">
+    
     <style>
-        body {
-            padding-top: 70px;
+        footer {
+            background-color: #1f1f1f;
+            color: #fff;
+            padding: 15px 0;
+            text-align: center;
+            font-size: 0.9rem;
+            width: 100%;
+        }
+
+        footer a {
+            color: #887400ff;
+            margin: 0 5px;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        .nav-link, .dropdown-item {
+            transition: color 0.5s ease;
+        }
+
+        .nav-link:hover, .dropdown-item:hover {
+            color: #887400ff !important;
         }
     </style>
 </head>
-<body>
+<body class="d-flex flex-column min-vh-100">
+
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container">
-        <a class="navbar-brand" href="{% url 'inicio' %}">TREGUA RESTAURANT</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <a class="navbar-brand" href="{% url 'inicio' %}">TREGUA</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
+                aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
+
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item"><a class="nav-link" href="{% url 'carta' %}">Carta</a></li>
                 <li class="nav-item"><a class="nav-link" href="{% url 'reserva' %}">Reservar</a></li>
-                <li class="nav-item"><a class="nav-link" href="{% url 'comentarios' %}">Opiniones</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'comentarios' %}">Comentarios</a></li>
                 <li class="nav-item"><a class="nav-link" href="{% url 'ubicacion' %}">Ubicación</a></li>
                 {% if user.is_authenticated %}
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="navbarDropdown"
-                           role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle d-flex align-items-center" href="#"
+                           id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             {% if user.profile.avatar %}
                                 <img src="{{ user.profile.avatar.url }}" class="rounded-circle me-2" alt="Avatar" width="30" height="30">
                             {% else %}
-                                <img src="{% static 'img/default-avatar.png' %}" class="rounded-circle me-2" alt="Avatar" width="30" height="30">
+                                <img src="/media/avatares/default-avatar.png" class="rounded-circle me-2" alt="Avatar" width="30" height="30">
                             {% endif %}
                             {{ user.username }}
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                            {% if user.is_superuser %}
+                                <li><a class="dropdown-item" href="{% url 'panel_de_administracion' %}">Panel Admin</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                            {% endif %}
                             <li><a class="dropdown-item" href="{% url 'perfil' %}">Perfil</a></li>
                             <li>
                                 <form method="post" action="{% url 'logout' %}">
@@ -55,10 +94,19 @@
         </div>
     </div>
 </nav>
-<div class="container mt-4">
+
+<main class="flex-grow-1 container mt-5 pt-1">
     {% block content %}
     {% endblock %}
-</div>
+</main>
+
+<footer>
+    &copy; 2025 TREGUA RESTAURANT · Hecho con ❤️ en Córdoba ·
+    <a href="https://www.instagram.com/treguarestaurant/" target="_blank">Instagram</a> ·
+    <a href="{% url 'about' %}">Acerca de mí</a>
+</footer>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+{% block scripts %}{% endblock %}
 </body>
 </html>
