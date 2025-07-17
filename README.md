@@ -2,14 +2,15 @@
 
 #### Comisión: 78110
 #### Alumno: Facundo Sangoy
+#### Profesor: Alan Exequiel Prestia
 
 ## Nombre del Proyecto
 
 ### Tregua Bar
 
 ## Descripción del Proyecto
-    
-#### Página Web destinada a un bar para que sus clientes pueda hacer la reserva, ver la carta y hasta hacer comentarios.
+
+### Página Web destinada a un bar para que sus clientes pueda hacer la reserva, ver la carta y hasta hacer comentarios.
 
 #### Para acceder a las distintas secciones del sitio web del bar, los clientes deben iniciar sesión o registrarse si aún no poseen una cuenta. Una vez registrado correctamente, el cliente será redirigido automáticamente a la página de inicio.
 
@@ -31,12 +32,9 @@
 ##### Bootstrap
 
 ### Back-End
-##### Python
-##### Django 
+#### Python
+#### Django 
 
-## Para hacer que funcione tiene que abrir el terminal en Visual Studio Code, hacer un makemigrations, hacer un migrate y crear un superuser.
-### En mi caso el superuser es TREGUA y la contraseña 1234
+## Video Demostración
 
-## Video de como funciona la página
-
-#### https://youtu.be/931CxB60lYA
+### https://youtu.be/O3tgo0Txl9Q
